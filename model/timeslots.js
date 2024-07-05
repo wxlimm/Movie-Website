@@ -1,7 +1,3 @@
-// DISM FT 2A 02
-// LIM WEI XIONG
-// P2026198
-
 var db = require('./databaseConfig.js');
 
 const timeslots = {
