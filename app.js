@@ -1,9 +1,3 @@
-// DISM FT 2A 02
-// LIM WEI XIONG
-// P2026198
-
-
-
 var express = require('express');
 
 var app = express();
