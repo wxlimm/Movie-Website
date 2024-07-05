@@ -1,7 +1,3 @@
-// DISM FT 2A 02
-// LIM WEI XIONG
-// P2026198
-
 const { request } = require('../app.js');
 var db = require('./databaseConfig.js');
 
