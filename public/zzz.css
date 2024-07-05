@@ -1,0 +1,178 @@
+@charset "utf-8";
+body{
+    min-height: 1000px;
+}
+
+footer{
+    margin-top: 73px;
+}
+
+a {
+    text-decoration: none;
+    color: gray;
+}
+
+a:hover {
+    text-decoration: none;
+    color: aqua;
+}
+
+div#mainDeets div a {
+    text-decoration: none;
+    color: white;
+}
+div#mainDeets div a:hover {
+    text-decoration: none;
+    color: aqua;
+
+}
+.movietitle2 {
+    color: white;
+}
+
+a.movietitle2:hover {
+    color: aqua;
+}
+
+.card {
+    border: none;
+}
+
+button {
+    color: white;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+    overflow-x: hidden;
+}
+
+.movieposter1 {
+    width: 100%;
+    object-fit: cover;
+}
+
+.nav {
+    margin-bottom: 0;
+}
+
+.dropdown {
+    position: static;
+}
+
+.dropdown-menu {
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown-menu>li {
+    display: inline-block;
+}
+
+.a {
+    white-space: nowrap;
+}
+
+.card-body {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+.card-img-top {
+    opacity: 1;
+    display: block;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.movieButton {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.movieImageContainer:hover .card-img-top {
+    opacity: 0.6;
+    transform: scale(1.1);
+}
+
+.movieImageContainer:hover .movieButton {
+    opacity: 1;
+}
+
+.movieButtonText {
+    background-color: #0275dB;
+    color: white;
+    font-size: 16px;
+    padding: 14px 25px;
+}
+
+.movieButton:hover .movieButtonText {
+    background-color: #6702dbe0;
+    color: white;
+}
+
+input[type="radio"] {
+    -webkit-appearance: none;
+}
+
+input[type="radio"]+label {
+    color: grey;
+    font-size: 25px;
+}
+
+input[type="radio"]:checked+label {
+    color: gold;
+    font-size: 25px;
+}
+
+i.fas {
+    color: gold;
+}
+
+#mainimage {
+    /* mix-blend-mode: darken; */
+    display: inline-block;
+
+    /* background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(130,91,0,1) 100%); */
+    background-color: #837960;
+    background-image: linear-gradient( to bottom, transparent, #000000), url("http://localhost:8081/images/Ironman3Slide.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    height: 860px;
+}
+
+
+#mainDeets {
+    position: absolute;
+    top: 57%;
+    right: 56%;
+}
+
+#ppImage {
+    border-radius: 50%;
+    height: 6vw;
+    width: 6vw;
+    object-fit: cover;
+    position: absolute;
+    top: -8%;
+    right: 90%;
+}
+
+#navImage {
+    border-radius: 50%;
+    height: 2.2vw;
+    width: 2.2vw;
+    object-fit: cover;
+
+}

@@ -1,0 +1,918 @@
+<!-- 
+DISM FT 2A 02
+LIM WEI XIONG
+P2026198    
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://localhost:8081/css/zzz.css" type="text/css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/f5ac354cb0.js" crossorigin="anonymous"></script>
+
+    <script>
+        const token = localStorage.getItem("token");
+        const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+        const loggedInUserType = localStorage.getItem("userType");
+        const baseUrl = "http://localhost:8081";
+    </script>
+
+    <script>
+        axios.get(`${baseUrl}/genre/`)
+            .then((response) => {
+                const genres = response.data;
+                console.log(genres)
+                for (let i = 0; i < genres.length; i++) {
+                    const genre = genres[i];
+                    const movieHtml = `
+                    <div class= "col-xl-3 col-lg-4 col-md-6 col-sm-6 py-2 mr-auto justify-content-center" id="movie-list-item">
+                        <div class="roundedbg-light justify-content-center mx-auto">
+                                <a class="card-title" href="/genres/${genre.genreid}">${genre.genre}</a>
+                        </div>
+                    </div>
+                    `;
+                    $("#genreList").append(movieHtml);
+
+                    const movie_genreCBHtml = `
+                    <div class="form-check col-xl-4">
+                        <input class="form-check-input genreCB" type="checkbox" value="${genre.genreid}">
+                        <label class="form-check-label" for="defaultCheck1">
+                            ${genre.genre}
+                        </label>
+                    </div>
+                    `;
+                    $("#movie_genre").append(movie_genreCBHtml);
+                }
+            });
+
+        axios.get(`${baseUrl}/movie/`)
+            .then((response) => {
+                const movies = response.data;
+                for (let i = 0; i < movies.length; i++) {
+                    const movie = movies[i];
+                    const delMovieHtml = `
+                        <option value="${movie.movieid}">${movie.title}</option>
+                    `;
+                    $("#delMovieDropdown").append(delMovieHtml);
+
+                }
+            }
+            );
+    </script>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body style="background: rgb(0,0,0); background: linear-gradient(180deg, rgba(0,0,0,1) 20%, rgba(24,24,24,1) 70%);">
+    <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-light fixed-top" style="background-color: black;" id="Navbar1">
+            <a class="navbar-brand" href="http://localhost:8081/" style="color: gray;">ZenMovies</a>
+
+            <div class="collapse navbar-collapse container-fluid" id="navbarSupportedContent">
+
+                <ul class="navbar-nav col-xl-5" id="123abc">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: gray;">
+                            Genres
+                        </a>
+
+
+                        <div class="dropdown-menu bg-dark" style="color: gray;" aria-labelledby="navbarDropdown">
+                            <div class="container-fluid mr-auto" href="#" id="genreList" >
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <li class="nav-item pr-2">
+                        <a class="nav-link" href="http://localhost:8081/movies/" style="color: gray;">Movies</a>
+                    </li>
+
+                    <script>
+
+                        if (token === null || isNaN(loggedInUserID)) {
+                            console.log("notloggedin")
+                            const loginHtml = `
+                            <button class="pt-auto btn btn-success my-2 my-sm-0" id="Login" type="login" style="height:100%">Login</button>
+                            `;
+                            $("#123abc").append(loginHtml);
+
+                        } else {
+                            console.log("loggedin")
+                            const loginHtml = `
+                            <a><button class="pt-auto ml-2 btn btn-danger my-sm-0" id="Logout" type="logout" style="height:100%">Logout</button></a>
+                            `;
+                            $("#123abc").append(loginHtml);
+                            if (loggedInUserType == "Admin") {
+                                const adminHtml = `
+                                <a href="${baseUrl}/admin/"><button class="pt-auto ml-2 btn btn-primary my-sm-0"id="Logout" type="logout" style="height:100%">Admin</button></a>
+                                `;
+                                $("#123abc").append(adminHtml);
+                            }
+
+                            axios.get(`${baseUrl}/users/${loggedInUserID}`)
+                                .then((response) => {
+                                    const userDeets = response.data;
+                                    if (!userDeets.profile_pic_url) {
+                                        imagepath = baseUrl + "/" + "imagesforuser/no_image.jpg"
+                                    } else {
+                                        imagepath = baseUrl + "/" + userDeets.profile_pic_url
+                                    }
+
+                                    const userDeetHtml = `
+                                        <img class="border-dark ml-2 my-auto" style="border: 2px solid ;" src="${imagepath}" id="navImage"></img>
+                                        <p class="ml-2 my-auto" style="color:gray">Welcome,</p>
+                                        <p class="ml-2 my-auto" style="color:white"> ${userDeets.username}</p>
+                                    `
+                                    $("#123abc").append(userDeetHtml);
+                                })
+
+                        }
+                    </script>
+
+                    <div class="nav-item nav-link" id="123abc">
+                    </div>
+                    <div class="nav-item nav-link" id="adminornot">
+                    </div>
+
+
+                    <script>
+                        $("#Logout").click(event => {
+                            event.preventDefault();
+
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("loggedInUserID");
+                            window.location.href = `${baseUrl}/movies/`
+                        });
+                        $("#Login").click(event => {
+                            event.preventDefault();
+
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("loggedInUserID");
+                            window.location.href = `${baseUrl}/login/`
+                        });
+
+                    </script>
+
+                </ul>
+
+                <!-- SEARCH FORM -->
+                <form id="searchMovie" class="form-inline my-2 my-lg-0">
+                    <select id="searchtype" class="form-select form-control my-2 mr-sm-1" style="background-color: #303030; border: #202020; color: gray;">
+                        <option value="title">Movie Title</option>
+                        <option value="cast">Actor</option>
+                    </select>
+                    <input class="form-control mr-sm-2 ml-2" type="search" placeholder="Search" aria-label="Search"
+                        id="searchvalue" style="background-color: #303030; border: #202020; color: gray;">
+                    <i></i><button class="btn btn-success my-2 my-sm-0 ml-1" type="submit">Search</button>
+                </form>
+            </div>
+            <!-- SCRIPT FOR SEARCH -->
+            <script>
+                $("#searchMovie").submit((event) => {
+
+                    event.preventDefault();
+
+
+                    const searchType = $("#searchtype").val();
+                    const searchValue = $("#searchvalue").val();
+                    if (searchValue.length !== 0 && searchValue.trim() != "") {
+
+                        window.location.href = `${baseUrl}/search/${searchType}/${searchValue}/`
+
+                    }
+
+                })
+            </script>
+
+
+
+
+    </div>
+    </nav>
+    </div>
+
+
+    <div class="container-fluid row justify-content-center mx-auto" id="moviepage">
+        <br><br><br><br>
+
+        <div class="col-xl-10 rounded px-5 py-2">
+            <h2>Movies</h2>
+        </div>
+
+
+        <div class="col-xl-10 row rounded text-center px-auto mx-auto pb-5" style="background: rgb(0,0,0);
+        background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(24,24,24,1) 35%, rgba(20,20,20,0) 90%);"
+            id="adminAction">
+            <div class="rounded px-5 pt-5" style="color: white;">
+                <h1>Admin</h1>
+                <hr>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- MODAL FOR POP-UP NEW MOVIE FORM -->
+    <div class="modal fade" id="newMovieModal" tabindex="-1" role="dialog" aria-labelledby="reviewmoviename"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark" style="color: white;">
+                <div class="modal-header border-bottom-0">
+                    <h4 class="modal-title pt-1 pl-1" id="reviewmoviename" style="color: white;">Add Movie</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white;">&times;</span>
+                    </button>
+
+                </div>
+
+                <form id="movie-form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="newTitle">Movie Title</label>
+                            <input type="text" class="form-control" id="newTitle" placeholder="Title Here" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newDesc">Description</label>
+                            <textarea class="form-control" id="newDesc" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="newCast">Cast</label>
+                            <input type="text" class="form-control" id="newCast" placeholder="Terry Tan, Abby Rao etc."
+                                required>
+                        </div>
+                        <small id="emailHelp" class="form-text text-muted">Select 1 or more genre </small>
+
+                        <div class="form-group row px-3" id="movie_genre">
+                        </div>
+                        <div class="form-group">
+                            <label for="newTime">Movie Duration</label>
+                            <input type="text" class="form-control" id="newTime" placeholder="___ mins" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newRelease">Release Date</label>
+                            <input type="date" class="form-control" id="newRelease" placeholder="dd-mmm-yyyy" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="moviePic" class="form-label">Movie Poster</label>
+                            <input class="form-control form-control-sm" id="moviePic" type="file">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Movie</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#movie-form").submit((event) => {
+            // prevent page reload
+            event.preventDefault();
+
+            const title1 = $("#newTitle").val();
+            const description1 = $("#newDesc").val();
+            const cast1 = $("#newCast").val();
+            const time1 = $("#newTime").val();
+            const image_path1 = null;
+            var date1 = $("#newRelease").val();
+            // Convert date xxxx-xx-xx to xx-xxx-xxxx
+            date2 = date1.split("-")
+            months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            date2[1] = months[parseInt(date2[1]) - 1]
+            newdate = `${parseInt(date2[2]).toString()} ${date2[1]} ${date2[0]}`
+
+            var checkedValue = "";
+            var inputElements = document.getElementsByClassName('genreCB');
+            for (var i = 0; inputElements[i]; ++i) {
+                if (inputElements[i].checked) {
+                    if (checkedValue === "") {
+                        checkedValue += `${inputElements[i].value}`
+                    } else {
+                        checkedValue += `,${inputElements[i].value}`
+                    }
+                }
+            }
+            alert(checkedValue);
+
+            const requestBody = {
+                title: title1,
+                description: description1,
+                cast: cast1,
+                genreid: checkedValue,
+                time: time1,
+                "opening date": newdate
+            };
+            // alert(requestBody.title + '\n' + requestBody.description + '\n' +  requestBody.cast + '\n' + requestBody.genreid + '\n' + requestBody.time + '\n' + requestBody['opening date'])
+
+            axios.post(`${baseUrl}/movie/`, requestBody)
+                .then((response) => {
+                    movieid = response.data.movieid
+                    if (document.getElementById("moviePic").files[0] !== undefined) {
+                        let photo = document.getElementById("moviePic").files[0];
+                        alert(document.getElementById("moviePic").files[0])
+                        let formData = new FormData();
+                        formData.append("newImage", photo);
+
+                        axios.post(`${baseUrl}/movie/${movieid}/image/`, formData, {
+                            headers: {
+                                'content-type': 'multipart/form-data' // do not forget this 
+                            }
+                        })
+                    }
+                    alert("Movie Uploaded!");
+
+                    window.location.href = `${baseUrl}/movies`;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                    if (error.response.status === 400) {
+                        alert("Validation failed");
+                    } else if (error.response.status === 422) {
+                        alert("Username is taken");
+                    } else {
+                        alert("Something unexpected went wrong.");
+                    }
+                });
+        }
+        );
+    </script>
+
+    <!-- MODAL FOR POP-UP NEW GENRE FORM -->
+    <div class="modal fade" id="newGenreModal" tabindex="-1" role="dialog" aria-labelledby="reviewmoviename"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark" style="color: gray;">
+                <div class="modal-header border-bottom-0">
+                    <h4 class="modal-title pt-1 pl-1" id="reviewmoviename">Add Genre</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white;">&times;</span>
+                    </button>
+
+                </div>
+
+                <form id="genre-form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="newGenre">Genre Name</label>
+                            <input type="text" class="form-control" id="newGenre" placeholder="Genre Here" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newGenDesc">Description</label>
+                            <textarea class="form-control" id="newGenDesc" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Genre</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#genre-form").submit((event) => {
+
+            const genre1 = $("#newGenre").val();
+            const genDesc1 = $("#newGenDesc").val();
+            const requestBody = {
+                genre: genre1,
+                description: genDesc1,
+            };
+            axios.post(`${baseUrl}/genre/`, requestBody)
+                .then((response) => {
+                    alert(`Genre: ${genre1}, Uploaded!`);
+
+                    window.location.href = `${baseUrl}/movies`;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                    if (error.response.status === 400) {
+                        alert("Validation failed");
+                    } else {
+                        alert("Something unexpected went wrong.");
+                    }
+                });
+        })
+    </script>
+
+
+    <!-- MODAL FOR POP-UP DELETE MOVIE FORM -->
+    <div class="modal fade" id="delMovieModal" tabindex="-1" role="dialog" aria-labelledby="reviewmoviename"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark" style="color: gray;">
+                <div class="modal-header border-bottom-0">
+                    <h4 class="modal-title pt-1 pl-1" id="reviewmoviename">Delete Movie</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white;">&times;</span>
+                    </button>
+
+                </div>
+
+                <form id="delmovie-form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select class="form-select" id="delMovieDropdown">
+                                <option selected>Open this select menu</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Delete Movie</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#delmovie-form").submit((event) => {
+
+            var movieid = $("#delMovieDropdown").val();
+
+            axios.delete(`${baseUrl}/movie/${movieid}`)
+                .then((response) => {
+                    alert(`Genre: ${genre1}, Uploaded!`);
+
+                    window.location.href = `${baseUrl}/movies`;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                    if (error.response.status === 400) {
+                        alert("Validation failed");
+                    } else {
+                        alert("Something unexpected went wrong.");
+                    }
+                });
+        })
+    </script>
+
+
+    <!-- MODAL FOR POP-UP EDIT MOVIE FORM -->
+    <div class="modal fade" id="editMovieModal" tabindex="-1" role="dialog" aria-labelledby="reviewmoviename"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark" style="color: gray;">
+                <div class="modal-header border-bottom-0">
+                    <h4 class="modal-title pt-1 pl-1" id="reviewmoviename">Edit Movie</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white;">&times;</span>
+                    </button>
+
+                </div>
+
+                <form id="editmovie-form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select class="form-select" id="editMovieDropdown">
+                                <option selected>Open this select menu</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-info" class="close" data-dismiss="modal" aria-label="Close"
+                            id="editbutton123">Edit this Movie</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL FOR POP-UP EDIT MOVIE FORM -->
+    <div class="modal fade" id="editMovieModal2" tabindex="-1" role="dialog" aria-labelledby="reviewmoviename"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div id="editmoviedeets">
+
+                </div>
+                <div id="editmoviedeets2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#editbutton123").click((event) => {
+            event.preventDefault();
+
+            var movieid = $("#editMovieDropdown").val();
+            if (isNaN(movieid) == false) {
+                localStorage.setItem("editmovieid", movieid);
+
+                // ENDPOINT FOR GETTING MOVIE BY ID
+                axios.get(`${baseUrl}/movie/${movieid}`)
+                    .then((response) => {
+                        const movie = response.data;
+                        localStorage.setItem("editmovieimagepath", movie.image_path);
+
+                        console.log(movie)
+                        console.log(`${baseUrl}/${movie.image_path}`)
+                        if (!movie.image_path) {
+                            imagepath = baseUrl + "/" + "images/no_image.jpg"
+                        } else {
+                            imagepath = baseUrl + "/" + movie.image_path
+                        }
+
+                        // CONVERT RELEASE DATE TO SUITABLE FORMAT
+                        date1 = movie['opening date']
+                        date2 = date1.split(" ")
+                        if (date2[0].length == 1) {
+                            date2[0] = "0" + date2[0]
+                        }
+                        months = { "Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06", "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12" }
+                        newdate = `${date2[2]}-${months[date2[1]]}-${date2[0]}`
+
+
+                        const movienameHtml = `
+                        <div class="bg-dark" style="color: white;">
+                        <div class="modal-header border-bottom-0">
+                            <h4 class="modal-title pt-1 pl-1" id="editmoviename" style="color: white;">Edit Movie: ${movie.title}</h4>
+                        </div>
+                        </div>
+                        `;
+                        $("#editmoviedeets").html(movienameHtml);
+
+                        const movieHtml = `
+                        <div class="bg-dark" style="color: white;">
+                        <form id="editmovie-form2">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="newTitle">Movie Title</label>
+                                    <input type="text" class="form-control" id="newTitle2" placeholder="Title Here" value="${movie.title}"" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newDesc">Description</label>
+                                    <textarea type="text" class="form-control" id="newDesc2" rows="3" required>${movie.description}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newCast">Cast</label>
+                                    <textarea type="text" class="form-control" id="newCast2" rows="3" required>${movie.cast}</textarea>
+                                </div>
+                                <small id="emailHelp" class="form-text text-muted">Select 1 or more genre </small>
+
+                                <div class="form-group row px-3" id="editmovie_genre">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newTime">Movie Duration</label>
+                                    <input type="text" class="form-control" id="newTime2" placeholder="___ mins" value="${movie.time}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newRelease">Release Date</label>
+                                    <input type="date" class="form-control" id="newRelease2" value="${newdate}" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="moviePic" class="form-label">Movie Poster</label>
+                                    <input class="form-control form-control-sm" id="moviePic2" type="file">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                        </div>
+                        `;
+                        $("#editmoviedeets2").html(movieHtml);
+                        genrelist = movie.genres.split(",")
+
+                        axios.get(`${baseUrl}/genre/`)
+                            .then((response) => {
+                                const genres = response.data;
+                                console.log(genres)
+                                // Loop for appending checked boxes if genre exists
+                                for (let i = 0; i < genres.length; i++) {
+                                    const genre = genres[i];
+                                    for (let j = 0; j < genrelist.length; j++) {
+                                        if (genre.genre == genrelist[j]) {
+                                            const movie_genreCBHtml = `
+                                            <div class="form-check col-xl-4">
+                                                <input class="form-check-input genreCB2" type="checkbox" value="${genre.genreid}" checked>
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    ${genre.genre}
+                                                </label>
+                                            </div>
+                                            `;
+                                            $("#editmovie_genre").append(movie_genreCBHtml);
+                                            break;
+
+                                        } else if (genre.genre !== genrelist[j] && j == (genrelist.length - 1)) {
+                                            const movie_genreCBHtml = `
+                                            <div class="form-check col-xl-4">
+                                                <input class="form-check-input genreCB2" type="checkbox" value="${genre.genreid}">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    ${genre.genre}
+                                                </label>
+                                            </div>
+                                            `;
+                                            $("#editmovie_genre").append(movie_genreCBHtml);
+                                            break;
+
+                                        }
+                                    }
+                                }
+                            })
+                        $("#editMovieModal2").modal("show");
+                        $("#editmovie-form2").submit((event) => {
+                            // prevent page reload
+                            event.preventDefault();
+                            var movieid = parseInt(localStorage.getItem("editmovieid"));
+                            localStorage.removeItem("editmovieid");
+
+                            const title1 = $("#newTitle2").val();
+                            const description1 = $("#newDesc2").val();
+                            const cast1 = $("#newCast2").val();
+                            const time1 = $("#newTime2").val();
+                            const image_path1 = localStorage.getItem("editmovieid");
+                            localStorage.removeItem("editmovieimagepath");
+
+
+                            var date1 = $("#newRelease2").val();
+                            // Convert date xxxx-xx-xx to xx-xxx-xxxx
+
+                            date2 = date1.split("-")
+                            months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                            date2[1] = months[parseInt(date2[1]) - 1]
+                            newdate = `${parseInt(date2[2]).toString()} ${date2[1]} ${date2[0]}`
+
+                            var checkedValue = "";
+                            var inputElements = document.getElementsByClassName('genreCB2');
+                            for (var i = 0; inputElements[i]; ++i) {
+                                if (inputElements[i].checked) {
+                                    if (checkedValue === "") {
+                                        checkedValue += `${inputElements[i].value}`
+                                    } else {
+                                        checkedValue += `,${inputElements[i].value}`
+                                    }
+                                }
+                            }
+
+                            const requestBody = {
+                                title: title1,
+                                description: description1,
+                                cast: cast1,
+                                genreid: checkedValue,
+                                time: time1,
+                                "opening date": newdate
+                            };
+                            axios.delete(`${baseUrl}/genre/${movieid}`)
+                            axios.put(`${baseUrl}/movie/${movieid}`, requestBody)
+                                .then((response) => {
+                                    if (document.getElementById("moviePic2").files[0] !== undefined) {
+                                        let photo = document.getElementById("moviePic2").files[0];
+                                        let formData = new FormData();
+                                        formData.append("newImage", photo);
+
+                                        axios.post(`${baseUrl}/movie/${movieid}/image/`, formData, {
+                                            headers: {
+                                                'content-type': 'multipart/form-data' // do not forget this 
+                                            }
+                                        })
+                                    }
+                                    alert("Movie Updated!");
+                                    window.location.href = `${baseUrl}/movies/${movieid}`;
+
+
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                    alert("Something unexpected went wrong.");
+                                    
+                                });
+                        }
+                        );
+
+                    });
+            }
+        })
+    </script>
+
+    <script>
+    </script>
+
+
+
+
+    <script>
+
+        console.log("loggedin")
+        if (loggedInUserType == "Admin") {
+            const newMovieHtml = `
+                <div class="col-xl-6 my-5 text-center">
+                    <button class="col-xl-4 btn btn-primary my-sm-0 mx-auto py-5" data-toggle="modal" data-target="#newMovieModal">Add a new movie</button>
+                </div>
+                <div class="col-xl-6 my-5 text-center">
+                    <button class="col-xl-4 btn btn-primary my-sm-0 mx-auto py-5" data-toggle="modal" data-target="#newGenreModal">Add a new Genre</button>
+                </div>
+                <div class="col-xl-6 my-4 text-center">
+                    <button class="col-xl-4 btn btn-danger my-sm-0 mx-auto py-5" data-toggle="modal" data-target="#delMovieModal">Delete a movie</button>
+                </div>
+                <div class="col-xl-6 my-4 text-center">
+                    <button class="col-xl-4 btn btn-info my-sm-0 mx-auto py-5" data-toggle="modal" data-target="#editMovieModal">Edit a movie</button>
+                </div>
+                
+                `;
+            $("#adminAction").append(newMovieHtml);
+        }
+        if (loggedInUserType !== "Admin") {
+            const newMovieHtml = `
+                <div class="col-xl-6 my-5 mx-auto text-center" style="color:white">
+                    <h4>Sorry, you do not have permission to access this page.</h4>
+                </div>
+                
+                `;
+            $("#adminAction").append(newMovieHtml);
+        }
+
+        $("#Logout").click(event => {
+            event.preventDefault();
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("loggedInUserID");
+            window.location.href = `${baseUrl}/movies/`
+        });
+
+    </script>
+    <script>
+        axios.get(`${baseUrl}/movie/`)
+            .then((response) => {
+                const movies = response.data;
+                for (let i = 0; i < movies.length; i++) {
+                    const movie = movies[i];
+                    const editMovieHtmlDropdown = `
+                        <option value="${movie.movieid}">${movie.title}</option>
+                    `;
+
+                    $("#editMovieDropdown").append(editMovieHtmlDropdown);
+
+                }
+            }
+            );
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+    <br><br><br><br><br>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class=" text-center text-lg-start pt-4"
+    style="background: rgb(0,0,0); background: linear-gradient(180deg, rgba(12,12,12,1) 20%, rgba(16,16,16,1) 70%, rgba(24,24,24,1) 100%); color: gray;">
+    <!-- Grid container -->
+    <div class="container p-4">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-lg-6 col-md-12 mb-md-0">
+                <p style="color: white;">About Us</p>
+                <small>
+                    <b>Zenmovies</b> is the leading Cinema in Singapore, where you can watch all of the latest and
+                    trending movies.
+                    We're confident that we can provide the best service and convenience for all that wish to watch the
+                    lastest hits!
+                </small>
+                <br>
+                <small>
+                    <i class="fab fa-twitter"></i>&nbsp Connect with us on Twitter
+                </small>
+                <br>
+                <hr>
+                <small><i> This site does not provide any free streaming services.</i></small>
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-lg-2 col-md-12 mb-md-0">
+                <p style="color: white;">Links</p>
+                    <small>Movies</small>
+                    <br>
+                    
+                    <small>TV Shows</small>
+                    <br>
+                    
+                    <small>Top IMDB</small>
+                    <br>
+            </div>
+            <div class="col-lg-2 col-md-12 mb-md-0">
+                <p style="color: white;">Popular</p>
+
+                    <small>Action Movies</small>
+                    <br>
+                    
+                    <small>Comedy Movies</small>
+                    <br>
+                    
+                    <small>Horror Movies</small>
+                    <br>
+
+                    <small>Adventure Movies</small>
+                    <br>
+    
+            </div>
+    
+
+            <!--Grid column-->
+
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-lg-2 col-md-12 mb-md-0">
+                <p style="color: white;">Social Media</p>
+                <small><i class="fab fa-instagram"></i>&nbsp Instagram</small>
+                <br>
+                
+                <small><i class="fab fa-facebook"></i>&nbsp Facebook</small>
+                <br>
+                
+                <small><i class="fab fa-pinterest"></i>&nbsp Pinterest</small>
+                <br>
+
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="color: #323232;">
+        © 2020 Copyright:
+        <a style="color: #343434;" href="http://localhost:8081/movies">zenmovies.com</a>
+    </div>
+    <!-- Copyright -->
+</footer>
+
+</html>
