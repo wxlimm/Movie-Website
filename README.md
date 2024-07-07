@@ -7,7 +7,9 @@ Languages and coding techniques, database used:
 3. Bootstrap
 4. JS
 5. mySQL Database
+6. node.js
 
+   
 Additional Functionality:
 1. Responsive Web Design
 2. Data pulling from mySQL Database
@@ -16,3 +18,12 @@ Additional Functionality:
 5. Admin User functionalities
 6. Posting reviews for websites
 7. Image upload
+
+
+axios
+express
+mysql
+jsonwebtoken
+multer
+nodemon
+mongoose
